@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.BhavCopySpringBoot.repository.BhavcopyJobRepository;
 
-
 import org.springframework.stereotype.Service;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,27 +39,33 @@ public class BhavcopyJobService {
 
     public UUID createJob(String params) {
         reqid = UUID.randomUUID();
-        //String reqStr = reqid.toString();
+        // String reqStr = reqid.toString();
         this.addedDate = LocalDateTime.now();
 
-       int sleepTime = ThreadLocalRandom.current().nextInt(10, 20);
+        int sleepTime = ThreadLocalRandom.current().nextInt(10, 20);
         try {
             Thread.sleep(sleepTime * 1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         this.startDate = LocalDateTime.now();
-       reqid=  bhavcopyJobRepository.createJob(reqid, params, addedDate, startDate);
-       //String reqStr = reqid.toString();
+        reqid = bhavcopyJobRepository.createJob(reqid, params, addedDate, startDate);
+        // String reqStr = reqid.toString();
         return reqid;
 
     }
 
     public void processJob(UUID reqid, String response) {
+        
+        int sleepTime = ThreadLocalRandom.current().nextInt(10, 20);
+        try {
+            Thread.sleep(sleepTime * 1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         executor.submit(() -> {
             try {
-
 
                 endDate = LocalDateTime.now();
                 if (startDate != null && endDate != null) {
@@ -77,7 +82,5 @@ public class BhavcopyJobService {
 
         });
     }
-
-    
 
 }

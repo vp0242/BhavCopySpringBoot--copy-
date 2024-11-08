@@ -212,21 +212,10 @@ public class BhavcopyService {
             default:
                 throw new Exception("Invalid Operation: " + op);
         }
-        int sleepTime = ThreadLocalRandom.current().nextInt(10, 20);
-        try {
-            Thread.sleep(sleepTime * 1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
+        
         String resultJson = mapper.writeValueAsString(result);
         bhavcopyJobService.processJob(reqid, resultJson);
-
-        // try {
-        // Thread.sleep(sleepTime * 1000);
-        // } catch (InterruptedException e) {
-        // Thread.currentThread().interrupt();
-        // }
+        
         String reqStr = reqid.toString();
         return reqStr;
     }
